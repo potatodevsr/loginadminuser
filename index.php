@@ -15,6 +15,7 @@
 
     <label for="username">ชื่อผู้ใช้</label>
     <input type="text" name="username" placeholder="Username" required>
+    <br>
     <label for="password">รหัสผ่าน</label>
     <input type="password" name="password" placeholder="Password" required>
     <br>
