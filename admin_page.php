@@ -1,10 +1,11 @@
 <?php 
+
     session_start();
 
     if (!$_SESSION['userid']) {
         header("Location: index.php");
     } else {
-    
+
 ?>
 
 <!DOCTYPE html>
@@ -15,16 +16,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Admin Page</title>
 
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
 
- 
 </head>
 <body>
 
-<h1>You are Member</h1>
-<h3>Hi, <?php echo $_SESSION['user']; ?></h3>
-<p><a href="logout.php">Logout</a></p>
-
+        <h1>You are Admin</h1>
+        <h3>Hi, <?php echo $_SESSION['user']; ?></h3>
+        <p><a href="logout.php">Logout</a></p>
+    
 </body>
 </html>
 

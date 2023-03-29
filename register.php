@@ -1,31 +1,28 @@
-<?php
+<?php 
 
-session_start();
+    session_start();
 
-require_once "connection.php";
+    require_once "connection.php";
 
-if (isset($_POST['submit']))  {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $firstname = $_POST['firstname'];
-    $lastname = $_POST['lastname'];
+    if (isset($_POST['submit'])) {
 
-    $user_check = "SELECT * FROM user WHERE username = '$username' LIMIT 1";
-    $result = mysqli_query($conn, $user_check);
-    $user = mysqli_fetch_assoc($result);
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $firstname = $_POST['firstname'];
+        $lastname = $_POST['lastname'];
 
-    if ($user['username'] === $username) {
+        $user_check = "SELECT * FROM user WHERE username = '$username' LIMIT 1";
+        $result = mysqli_query($conn, $user_check);
+        $user = mysqli_fetch_assoc($result);
 
-        //เรียกใช้ alert javascricpt
+        if ($user['username'] === $username) {
+            echo "<script>alert('Username already exists');</script>";
+        } else {
+            $passwordenc = md5($password);
 
-        echo "<script>alert('Username already exists');</script>";
-    } else {
-        //ถ้าเกิดว่าใช้งาน username ใหม่ ที่ไม่ซ้ำ
-        $passwordenc = md5($password);
-
-        $query = "INSERT INTO user (username, password, firstname, lastname, userlevel)
-            VALUE ('$username', '$passwordenc', '$firstname', '$lastname', '$userlevel', 'm')";
-        $result = mysqli_query($conn, $query);
+            $query = "INSERT INTO user (username, password, firstname, lastname, userlevel)
+                        VALUE ('$username', '$passwordenc', '$firstname', '$lastname', 'm')";
+            $result = mysqli_query($conn, $query);
 
             if ($result) {
                 $_SESSION['success'] = "Insert user successfully";
@@ -34,27 +31,29 @@ if (isset($_POST['submit']))  {
                 $_SESSION['error'] = "Something went wrong";
                 header("Location: index.php");
             }
-    }
-}
+        }
 
+    }
 
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Register Page</title>
 
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
 
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-
+    
         <label for="username">Username</label>
         <input type="text" name="username" placeholder="Enter your username" required>
         <br>
@@ -63,14 +62,15 @@ if (isset($_POST['submit']))  {
         <br>
         <label for="firstname">Firstname</label>
         <input type="text" name="firstname" placeholder="Enter your firstname" required>
-        <br>    
+        <br>
         <label for="lastname">Lastname</label>
         <input type="text" name="lastname" placeholder="Enter your lastname" required>
-        <br>       
+        <br>
         <input type="submit" name="submit" value="Submit">
-
+    
     </form>
 
     <a href="index.php">Go back to index</a>
+    
 </body>
 </html>
